@@ -22,15 +22,12 @@ var oauth2 = {
 
     providers: getProviders(),
 
-    createProvider: function(name, options) {
+    createProvider: function(name, client_id, client_secret, redirect_uri) {
         var Provider = this.providers[name];
         if (! Provider) {
             throw new Error('No provider \'' + name + '\' found.');
         }
-        if (typeof(options)!=='object') {
-            throw new Error('Invalid argument \'options\'.');
-        }
-        return new Provider(options);
+        return new Provider(client_id, client_secret, redirect_uri);
     }
 };
 
