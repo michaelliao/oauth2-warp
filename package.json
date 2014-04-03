@@ -23,9 +23,7 @@
         "lodash": "2.4.1"
     },
     "devDependencies": {
-        "async": "0.2.10",
-        "mocha": "1.18.x",
-        "should": "3.x"
+        "async": "0.2.10"
     },
     "keywords": [
         "oauth2",
