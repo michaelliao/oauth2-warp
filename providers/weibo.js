@@ -48,7 +48,7 @@ WeiboProvider.prototype.getAuthentication = function(options, callback) {
                 access_token: r.access_token,
                 refresh_token: '',
                 expires_in: r.expires_in,
-                oauth_id: r.uid,
+                auth_id: r.uid,
                 name: p.screen_name,
                 url: 'http://weibo.com/' + (p.domain ? p.domain : p.idstr),
                 image_url: p.profile_image_url

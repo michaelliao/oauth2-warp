@@ -49,7 +49,7 @@ FacebookProvider.prototype.getAuthentication = function(options, callback) {
                 access_token: r.access_token,
                 refresh_token: '',
                 expires_in: parseInt(r.expires),
-                oauth_id: p.id,
+                auth_id: p.id,
                 name: p.name,
                 url: p.link,
                 image_url: ''

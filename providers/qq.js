@@ -66,7 +66,7 @@ QQProvider.prototype.getAuthentication = function(options, callback) {
                     access_token: r.access_token,
                     refresh_token: r.refresh_token,
                     expires_in: parseInt(r.expires_in),
-                    oauth_id: p.openid,
+                    auth_id: p.openid,
                     name: info.nickname,
                     url: '',
                     image_url: info.figureurl_qq_2 || info.figureurl_qq_1
@@ -114,8 +114,8 @@ QQProvider.prototype.requestAPI = function(method, apiName, access_token, option
     });
 };
 
-QQProvider.prototype.getProfile = function(access_token, oauth_id, callback) {
-    this.requestAPI('GET', 'user/get_user_info', access_token, { openid: oauth_id }, function(err, r) {
+QQProvider.prototype.getProfile = function(access_token, auth_id, callback) {
+    this.requestAPI('GET', 'user/get_user_info', access_token, { openid: auth_id }, function(err, r) {
         if (err) {
             return callback(err);
         }
