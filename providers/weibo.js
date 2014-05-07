@@ -88,4 +88,76 @@ WeiboProvider.prototype.requestAPI = function(method, apiName, access_token, opt
     });
 };
 
+function lenb(s) {
+    var i, len = 0;
+    for (i = 0; i < s.length; i++) {
+        len ++;
+        if (s.charCodeAt(i) > 127) {
+            len ++;
+        }
+    }
+    return len;
+}
+
+function leftb(s, max) {
+    var i, ch, pos = 0, left = max;
+    for (i = 0; i < s.length; i++) {
+        ch = s.charCodeAt(i);
+        if (ch <= 127) {
+            if (left >= 1) {
+                pos = i + 1;
+                left --;
+            } else {
+                break;
+            }
+        } else { // ch >= 128
+            if (left >= 2) {
+                pos = i + 1;
+                left = left - 2;
+            } else {
+                break;
+            }
+        }
+    }
+    return s.substring(0, pos);
+}
+
+WeiboProvider.prototype.share = function (access_token, text, link, callback) {
+    var that = this;
+    async.waterfall([
+        function (callback) {
+            if (!link) {
+                return callback(null, null);
+            }
+            that.requestAPI('GET', 'short_url/shorten', access_token, {
+                url_long: link
+            }, callback);
+        },
+        function (r, callback) {
+            var
+                s,
+                url = '',
+                left = 280;
+            if (r !== null) {
+                try {
+                    url = ' ' + r.urls[0].url_short;
+                    left = left - url.length;
+                } catch (e) {
+                    return callback(e);
+                }
+            }
+            if (lenb(text) <= left) {
+                s = text + url;
+            } else {
+                s = leftb(text, left - 3) + '...' + url;
+            }
+            that.requestAPI('POST', 'statuses/update', access_token, {
+                status: s
+            }, callback);
+        }
+    ], function (err, r) {
+        return callback(err || null);
+    });
+};
+
 exports = module.exports = WeiboProvider;
