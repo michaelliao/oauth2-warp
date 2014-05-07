@@ -1,5 +1,7 @@
-var util = require('util');
-var request = require('request');
+var
+    async = require('async'),
+    util = require('util'),
+    request = require('request');
 
 function WeiboProvider(client_id, client_secret, redirect_uri) {
     this.client_id = client_id;
@@ -125,6 +127,10 @@ function leftb(s, max) {
 }
 
 WeiboProvider.prototype.share = function (access_token, text, link, callback) {
+    if (arguments.length === 3) {
+        callback = link;
+        link = null;
+    }
     var that = this;
     async.waterfall([
         function (callback) {
