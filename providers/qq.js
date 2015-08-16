@@ -61,7 +61,6 @@ QQProvider.prototype.getAuthentication = function (options, callback) {
             if (body.startsWith('callback(')) {
                 body = body.substring(9, body.lastIndexOf(')'));
             }
-            console.log('https://graph.qq.com/oauth2.0/me >> ' + body);
             var p = JSON.parse(body);
             that.requestAPI('GET', 'user/get_user_info', r.access_token, { openid: p.openid }, function (err, info) {
                 if (err) {

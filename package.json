@@ -25,7 +25,9 @@
     },
     "devDependencies": {
         "mocha": "1.18.x",
-        "should": "3.x"
+        "should": "3.x",
+        "gulp-jslint": "*",
+        "gulp": "^3.6.2"
     },
     "keywords": [
         "oauth2",
